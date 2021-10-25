@@ -1,3 +1,28 @@
+<?php
+
+require 'db.php';
+$sql = 'SELECT * FROM clientes';
+$statement = $connection->prepare($sql);
+$statement->execute();
+$clientes = $statement->fetchAll(PDO::FETCH_OBJ);
+
+$resultados = '';
+foreach($clientes as $cliente){
+  $resultados .= '<tr>
+                    <td>'.$cliente->Id.'</td>
+                    <td>'.$cliente->NomeCliente.'</td>
+                    <td>'.$cliente->CPF.'</td>
+                    <td>'.$cliente->Email.'</td>
+                    <td>
+                        <a href="editarCliente.php?id='.$cliente->Id.'"><button class="btn btn-info">Editar</button></a>
+                        <a href="excluirCliente.php?id='.$cliente->Id.'"><button class="btn btn-danger">Excluir</button></a>
+                    </td>
+                  </tr>';
+}
+
+
+?>
+
 <main>
 
 <section>
@@ -19,7 +44,8 @@
             <th>AÇÔES</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody>        
+        <?=$resultados?>
         </tbody>
 
     </table>
