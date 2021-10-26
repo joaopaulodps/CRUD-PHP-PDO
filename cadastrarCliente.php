@@ -8,8 +8,7 @@ define('VALORCLIENTE','');
 define('VALORCPF','');
 define('VALOREMAIL','');
 
-
-$message = '';
+// Método responsável pela criação de clientes no banco de dados
     if(isset($_POST['nome'], $_POST['cpf'], $_POST['email'])){
         
         $nome = $_POST['nome'];
@@ -19,15 +18,12 @@ $message = '';
         $sql = 'INSERT INTO clientes (NomeCliente, CPF, Email) VALUES (:nome, :cpf, :email)';
         $statement = $connection->prepare($sql);
         if($statement->execute([':nome'=> $nome, ':cpf'=> $cpf, ':email'=>$email])){
-            $message = 'Cliente cadastrado com sucesso!';
+            header('location: index.php?status=sucesso');
+
         }
     
     }
     
-
-
-/* echo "<pre>"; print_r($_POST); echo "</pre>"; exit; */
-
 require 'header.php';
 require 'formularioCliente.php';
 require 'footer.php';

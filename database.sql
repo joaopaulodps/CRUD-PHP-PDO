@@ -1,3 +1,5 @@
+-- Método responsável pela criação do banco de dados e suas tabelas
+
 create database bd_pedidos;
 
 use bd_pedidos;

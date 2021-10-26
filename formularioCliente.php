@@ -1,11 +1,5 @@
-<?php if(!empty($message)): ?>
-        <div class="alert alert-success">
-          <?= $message; ?>
-        </div>
-      <?php endif; ?>
-
 <main>
-
+<!-- Formulário usado para a inserção e update na tabela de clientes -->
 <section>
     <a href="index.php">
       <button class="btn btn-success">Voltar</button>
