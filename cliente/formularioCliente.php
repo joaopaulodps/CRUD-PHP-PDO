@@ -7,16 +7,15 @@
   </section>
 
   <h2 class="mt-4"><?=TITLE?></h2>
-
   <form method="POST">
   
     <div class="form-group">
-        <label>Nome</label>
+        <label>Nome <span class="text-danger font-weight-bold"><?=$errNome?></span></label>
         <input type="text" class="form-control" name="nome" value="<?=VALORCLIENTE?>">
     </div>
 
     <div class="form-group">
-        <label>CPF</label>
+        <label>CPF <span class="text-danger font-weight-bold"><?=$errCpf?></span></label>
         <input type="text" class="form-control" name="cpf" value="<?=VALORCPF?>">
     </div>
 
