@@ -36,8 +36,8 @@ foreach($clientes as $cliente){
                     <td>'.$cliente->CPF.'</td>
                     <td>'.$cliente->Email.'</td>
                     <td>
-                        <a href="editarCliente.php?id='.$cliente->Id.'" class="btn btn-info">Editar</a>
-                        <a href="excluirCliente.php?id='.$cliente->Id.'" class="btn btn-danger">Excluir</a>
+                        <a href="./cliente/editarCliente.php?id='.$cliente->Id.'" class="btn btn-info">Editar</a>
+                        <a href="./cliente/excluirCliente.php?id='.$cliente->Id.'" class="btn btn-danger">Excluir</a>
                     </td>
                   </tr>';
 }
@@ -51,8 +51,8 @@ foreach($produtos as $produto){
                     <td>'.$produto->NomeProduto.'</td>
                     <td>'.$produto->ValorUnitario.'</td>
                     <td>
-                        <a href="editarCliente.php?id='.$produto->IdProduto.'" class="btn btn-info">Editar</a>
-                        <a href="excluirCliente.php?id='.$produto->IdProduto.'" class="btn btn-danger">Excluir</a>
+                        <a href="./produto/editarProduto.php?id='.$produto->IdProduto.'" class="btn btn-info">Editar</a>
+                        <a href="./produto/excluirProduto.php?id='.$produto->IdProduto.'" class="btn btn-danger">Excluir</a>
                     </td>
                   </tr>';
 }
@@ -67,8 +67,8 @@ foreach($pedidos as $pedido){
                     <td>'.$pedido->IdProduto.'</td>
                     <td>'.$pedido->IdCliente.'</td>
                     <td>
-                        <a href="editarCliente.php?id='.$pedido->NumeroPedido.'" class="btn btn-info">Editar</a>
-                        <a href="excluirCliente.php?id='.$pedido->NumeroPedido.'" class="btn btn-danger">Excluir</a>
+                        <a href="./pedido/editarPedido.php?id='.$pedido->NumeroPedido.'" class="btn btn-info">Editar</a>
+                        <a href="./pedido/excluirPedido.php?id='.$pedido->NumeroPedido.'" class="btn btn-danger">Excluir</a>
                     </td>
                   </tr>';
 }
@@ -82,9 +82,9 @@ foreach($pedidos as $pedido){
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="#">Home</a>
-      <a class="nav-item nav-link" href="cadastrarCliente.php">Novo Cliente</a>
-      <a class="nav-item nav-link" href="cadastrarProduto.php">Novo Produto</a>
-      <a class="nav-item nav-link" href="cadastrarPedido.php">Novo Pedido</a>
+      <a class="nav-item nav-link" href="./cliente/cadastrarCliente.php">Novo Cliente</a>
+      <a class="nav-item nav-link" href="./produto/cadastrarProduto.php">Novo Produto</a>
+      <a class="nav-item nav-link" href="./pedido/cadastrarPedido.php">Novo Pedido</a>
     </div>
   </div>
 

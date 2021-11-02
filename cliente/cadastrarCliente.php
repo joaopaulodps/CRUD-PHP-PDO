@@ -1,6 +1,6 @@
 <?php
 
-require 'db.php';
+require '../db.php';
 
 define('TITLE','CADASTRAR CLIENTE');
 define('CONFIRMACAO','Cadastrar');
@@ -29,15 +29,15 @@ if(isset($_POST['nome'], $_POST['cpf'], $_POST['email'])){
             $sql = 'INSERT INTO clientes (NomeCliente, CPF, Email) VALUES (:nome, :cpf, :email)';
             $statement = $connection->prepare($sql);
             if($statement->execute([':nome'=> $nome, ':cpf'=> $cpf, ':email'=>$email])){
-                header('location: index.php?status=sucesso');
+                header('location: ../index.php?status=sucesso');
             } 
         }
             
     
     }
     
-require 'header.php';
+require '../header.php';
 require 'formularioCliente.php';
-require 'footer.php';
+require '../footer.php';
 
 ?>
