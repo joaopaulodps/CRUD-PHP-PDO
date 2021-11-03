@@ -10,12 +10,12 @@
   <form method="POST">
   
     <div class="form-group">
-        <label>Código de Barras <span class="text-danger font-weight-bold"><?=$errNome?></span></label>
+        <label>Código de Barras <span class="text-danger font-weight-bold"><?=$errCodBarras?></span></label>
         <input type="text" class="form-control" name="codBarras" value="<?=VALORCB?>">
     </div>
 
     <div class="form-group">
-        <label>Nome do Produto <span class="text-danger font-weight-bold"><?=$errCpf?></span></label>
+        <label>Nome do Produto <span class="text-danger font-weight-bold"><?=$errNomProd?></span></label>
         <input type="text" class="form-control" name="nomeProd" value="<?=VALORNP?>">
     </div>
 

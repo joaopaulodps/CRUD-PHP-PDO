@@ -2,34 +2,38 @@
 
 require '../db.php';
 
-define('TITLE','EDITAR PRODUTO');
+define('TITLE','EDITAR PEDIDO');
 define('CONFIRMACAO','Concluir Edição');
 
 // Método responsável por buscar os dados dos clientes para o update
 $id = $_GET['id'];
-$sql = 'SELECT * FROM produtos WHERE id=:idProd';
+$sql = 'SELECT * FROM pedidos WHERE NumeroPedido=:numPedido';
 $statement = $connection->prepare($sql);
-$statement->execute([':idProd'=>$id]);
-$produto = $statement->fetch(PDO::FETCH_OBJ);
+$statement->execute([':numPedido'=>$id]);
+$pedido = $statement->fetch(PDO::FETCH_OBJ);
 
-$errNome = '';
-$errCpf = '';
+$errDtPedido = '';
+$errQtPedido = '';
+$errIdProduto = '';
+$errIdCliente = '';
 $msg = '';
 
-define('VALORCB',$produto->CodBarras);
-define('VALORNP',$produto->NomeProduto);
-define('VALORVU',$produto->ValorUnitario);
+define('VALORDP',$pedido->DtPedido);
+define('VALORQP',$pedido->Quantidade);
+define('VALORIP',$pedido->idProduto);
+define('VALORIC',$pedido->idCliente);
 
-// Método responsável pelo update de clientes no banco de dados
-if(isset($_POST['codBarras'], $_POST['nomeProd'], $_POST['valUni'])){
+// Método responsável pelo update de produtos no banco de dados
+if(isset($_POST['dtPedido'], $_POST['qtPedido'], $_POST['idProduto'], $_POST['idCliente'])){
     
-    $nome = $_POST['codBarras'];
-    $cpf = $_POST['nomeProd'];
-    $email = $_POST['valUni'];
+    $dtPedido = $_POST['dtPedido'];
+    $qtPedido = $_POST['qtPedido'];
+    $idProduto = $_POST['idProduto'];
+    $idCliente = $_POST['idCliente'];
 
-    $sql = 'UPDATE produtos SET CodBarras=:codBarras, NomeProduto=:nomeProd, ValorUnitario=:valUni WHERE IdProduto=:idProd';
+    $sql = 'UPDATE pedidos SET dtPedido=:dtPedido, qtPedido=:qtPedido, idProduto=:idProduto, idCliente= :idCliente WHERE NumeroPedido=:numPedido';
     $statement = $connection->prepare($sql);
-    if($statement->execute([':codBarras'=> $codBarras, ':nomeProd'=> $nomeProd, ':valUni'=>$valUni, ':idProd'=>$id])){
+    if($statement->execute([':dtPedido'=> $dtPedido, ':qtPedido'=> $qtPedido, ':idProduto'=>$idProduto, ':idCliente'=>$idCliente, ':numPedido'=>$id])){
         header('location: ../index.php?status=sucesso');
     }
 
@@ -37,5 +41,5 @@ if(isset($_POST['codBarras'], $_POST['nomeProd'], $_POST['valUni'])){
 
 
 require '../header.php';
-require 'formularioCliente.php';
+require 'formularioPedido.php';
 require '../footer.php';
