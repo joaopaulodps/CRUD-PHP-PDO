@@ -13,37 +13,73 @@ if(isset($_GET['status'])){
 //busca de dados na tabela cliente, do banco de dados
 require 'db.php';
 
-$paginaAtual = filter_input(INPUT_GET, "pgcliente", FILTER_SANITIZE_NUMBER_INT);
-$pagina = (!empty($paginaAtual)) ? $paginaAtual : 1;
-var_dump($pagina);
+$paginaAtualCliente = filter_input(INPUT_GET, "pgcliente", FILTER_SANITIZE_NUMBER_INT);
+$paginaCliente = (!empty($paginaAtualCliente)) ? $paginaAtualCliente : 1;
+var_dump($paginaCliente);
 
-$limiteResultado = 1;
+$limiteResultadoCliente = 20;
 
-$inicio = ($limiteResultado * $pagina) - $limiteResultado;
+$inicioCliente = ($limiteResultadoCliente * $paginaCliente) - $limiteResultadoCliente;
 
-$sql = "SELECT * FROM clientes LIMIT $inicio, $limiteResultado";
+$sql = "SELECT * FROM clientes LIMIT $inicioCliente, $limiteResultadoCliente";
 $statement = $connection->prepare($sql);
 $statement->execute();
 $clientes = $statement->fetchAll(PDO::FETCH_OBJ);
 
-  $qtdRegistros = "SELECT COUNT(id) AS numResult FROM clientes";
-  $resQtdRegistros = $connection->prepare($qtdRegistros);
-  $resQtdRegistros->execute();
-  $rowQtdRegistros = $resQtdRegistros->fetch(PDO::FETCH_ASSOC);
+  $qtdRegistrosCliente = "SELECT COUNT(id) AS numResult FROM clientes";
+  $resQtdRegistrosCliente = $connection->prepare($qtdRegistrosCliente);
+  $resQtdRegistrosCliente->execute();
+  $rowQtdRegistrosCliente = $resQtdRegistrosCliente->fetch(PDO::FETCH_ASSOC);
   
-  $qtdPgCliente = ceil($rowQtdRegistros['numResult'] / $limiteResultado);
+  $qtdPgCliente = ceil($rowQtdRegistrosCliente['numResult'] / $limiteResultadoCliente);
 
-  $maxLink = 3;
+  $maxLinkCliente = 3;
   
-$sql = "SELECT * FROM produtos";
+
+  $paginaAtualProduto = filter_input(INPUT_GET, "pgproduto", FILTER_SANITIZE_NUMBER_INT);
+  $paginaProduto = (!empty($paginaAtualProduto)) ? $paginaAtualProduto : 1;
+  var_dump($paginaProduto);
+  
+  $limiteResultadoProduto = 20;
+  
+  $inicioProduto = ($limiteResultadoProduto * $paginaProduto) - $limiteResultadoProduto;  
+
+$sql = "SELECT * FROM produtos LIMIT $inicioProduto, $limiteResultadoProduto";
 $statement = $connection->prepare($sql);
 $statement->execute();
 $produtos = $statement->fetchAll(PDO::FETCH_OBJ);
 
-$sql = 'SELECT * FROM pedidos';
+$qtdRegistrosProduto = "SELECT COUNT(idProduto) AS numResultProd FROM produtos";
+  $resQtdRegistrosProduto = $connection->prepare($qtdRegistrosProduto);
+  $resQtdRegistrosProduto->execute();
+  $rowQtdRegistrosProduto = $resQtdRegistrosProduto->fetch(PDO::FETCH_ASSOC);
+  
+  $qtdPgProduto = ceil($rowQtdRegistrosProduto['numResultProd'] / $limiteResultadoProduto);
+
+  $maxLinkProduto = 3;
+
+
+  $paginaAtualPedido = filter_input(INPUT_GET, "pgpedido", FILTER_SANITIZE_NUMBER_INT);
+  
+  $limiteResultadoPedido = 20;
+  $paginaPedido = (!empty($paginaAtualPedido)) ? $paginaAtualPedido : 1;
+  var_dump($paginaPedido);
+  
+  $inicioPedido = ($limiteResultadoPedido * $paginaPedido) - $limiteResultadoPedido;
+
+$sql = "SELECT * FROM pedidos LIMIT $inicioPedido, $limiteResultadoPedido";
 $statement = $connection->prepare($sql);
 $statement->execute();
 $pedidos = $statement->fetchAll(PDO::FETCH_OBJ);
+
+$qtdRegistrosPedido = "SELECT COUNT(NumeroPedido) AS numResultPedido FROM pedidos";
+  $resQtdRegistrosPedido = $connection->prepare($qtdRegistrosPedido);
+  $resQtdRegistrosPedido->execute();
+  $rowQtdRegistrosPedido = $resQtdRegistrosPedido->fetch(PDO::FETCH_ASSOC);
+  
+  $qtdPgPedido = ceil($rowQtdRegistrosPedido['numResultPedido'] / $limiteResultadoPedido);
+
+  $maxLinkPedido = 3;
 
 //listagem dos resultados da tabela CLIENTES, do banco de dados
 $resultClientes = '';
@@ -151,6 +187,33 @@ foreach($pedidos as $pedido){
 
         </table>
     
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+        <?php  
+        
+        echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=1'>Primeira</a></li> "; 
+  
+        for($paginaAnteriorPedido = $paginaPedido - $maxLinkPedido; $paginaAnteriorPedido <= $paginaPedido -1; $paginaAnteriorPedido++){
+          if($paginaAnteriorPedido >=1){
+            echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$paginaAnteriorPedido'>$paginaAnteriorPedido</a></li> ";
+          }
+        }
+        
+        echo "<li class='page-item' ><a class='page-link disabled bg-dark'>$paginaPedido</a></li>"; 
+        
+        for($proximaPaginaPedido = $paginaPedido + 1; $proximaPaginaPedido <= $paginaPedido + $maxLinkPedido; $proximaPaginaPedido++){
+          if($proximaPaginaPedido <= $qtdPgPedido){
+            echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$proximaPaginaPedido'>$proximaPaginaPedido</a></li> ";
+          }
+        }
+      
+        
+      echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$qtdPgPedido'>Última</a></li> "; 
+                
+        ?>
+        </ul>
+        </nav>
+
       </section>
         </div>
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -179,17 +242,17 @@ foreach($pedidos as $pedido){
         
         echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=1'>Primeira</a></li> "; 
   
-        for($paginaAnterior = $pagina - $maxLink; $paginaAnterior <= $pagina -1; $paginaAnterior++){
-          if($paginaAnterior >=1){
-            echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=$paginaAnterior'>$paginaAnterior</a></li> ";
+        for($paginaAnteriorCliente = $paginaCliente - $maxLinkCliente; $paginaAnteriorCliente <= $paginaCliente -1; $paginaAnteriorCliente++){
+          if($paginaAnteriorCliente >=1){
+            echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=$paginaAnteriorCliente'>$paginaAnteriorCliente</a></li> ";
           }
         }
         
-        echo "<li class='page-item' ><a class='page-link disabled bg-dark'>$pagina</a></li>"; 
+        echo "<li class='page-item' ><a class='page-link disabled bg-dark'>$paginaCliente</a></li>"; 
         
-        for($proximaPagina = $pagina + 1; $proximaPagina <= $pagina + $maxLink; $proximaPagina++){
-          if($proximaPagina <= $qtdPgCliente){
-            echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=$proximaPagina'>$proximaPagina</a></li> ";
+        for($proximaPaginaCliente = $paginaCliente + 1; $proximaPaginaCliente <= $paginaCliente + $maxLinkCliente; $proximaPaginaCliente++){
+          if($proximaPaginaCliente <= $qtdPgCliente){
+            echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=$proximaPaginaCliente'>$proximaPaginaCliente</a></li> ";
           }
         }
       
@@ -222,6 +285,33 @@ foreach($pedidos as $pedido){
 
         </table>
     
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+        <?php  
+        
+        echo "<li class='page-item'><a class='page-link' href='index.php?pgproduto=1'>Primeira</a></li> "; 
+  
+        for($paginaAnteriorProduto = $paginaProduto - $maxLinkProduto; $paginaAnteriorProduto <= $paginaProduto -1; $paginaAnteriorProduto++){
+          if($paginaAnteriorProduto >=1){
+            echo "<li class='page-item'><a class='page-link' href='index.php?pgproduto=$paginaAnteriorProduto'>$paginaAnteriorProduto</a></li> ";
+          }
+        }
+        
+        echo "<li class='page-item' ><a class='page-link disabled bg-dark'>$paginaProduto</a></li>"; 
+        
+        for($proximaPaginaProduto = $paginaProduto + 1; $proximaPaginaProduto <= $paginaProduto + $maxLinkProduto; $proximaPaginaProduto++){
+          if($proximaPaginaProduto <= $qtdPgProduto){
+            echo "<li class='page-item'><a class='page-link' href='index.php?pgproduto=$proximaPaginaProduto'>$proximaPaginaProduto</a></li> ";
+          }
+        }
+      
+        
+      echo "<li class='page-item'><a class='page-link' href='index.php?pgproduto=$qtdPgProduto'>Última</a></li> "; 
+                
+        ?>
+        </ul>
+        </nav>
+
       </section>
     </div>
       </div>
