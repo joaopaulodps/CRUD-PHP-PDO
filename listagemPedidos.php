@@ -52,8 +52,6 @@ foreach($pedidos as $pedido){
                     </td>
                   </tr>';
 }
-?>
-<?php 
          
         $ordem == 'DESC' ? $ordem = 'ASC' : $ordem = 'DESC';
 
@@ -81,7 +79,6 @@ foreach($pedidos as $pedido){
        "
        ?>
         
-    
         <nav aria-label="Page navigation example">
           <ul class="pagination">
         <?php  
