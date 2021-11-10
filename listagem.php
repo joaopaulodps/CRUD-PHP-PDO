@@ -12,12 +12,30 @@ if(isset($_GET['status'])){
 
 //busca de dados na tabela cliente, do banco de dados
 require 'db.php';
-$sql = 'SELECT * FROM clientes';
+
+$paginaAtual = filter_input(INPUT_GET, "pgcliente", FILTER_SANITIZE_NUMBER_INT);
+$pagina = (!empty($paginaAtual)) ? $paginaAtual : 1;
+var_dump($pagina);
+
+$limiteResultado = 1;
+
+$inicio = ($limiteResultado * $pagina) - $limiteResultado;
+
+$sql = "SELECT * FROM clientes LIMIT $inicio, $limiteResultado";
 $statement = $connection->prepare($sql);
 $statement->execute();
 $clientes = $statement->fetchAll(PDO::FETCH_OBJ);
 
-$sql = 'SELECT * FROM produtos';
+  $qtdRegistros = "SELECT COUNT(id) AS numResult FROM clientes";
+  $resQtdRegistros = $connection->prepare($qtdRegistros);
+  $resQtdRegistros->execute();
+  $rowQtdRegistros = $resQtdRegistros->fetch(PDO::FETCH_ASSOC);
+  
+  $qtdPgCliente = ceil($rowQtdRegistros['numResult'] / $limiteResultado);
+
+  $maxLink = 3;
+  
+$sql = "SELECT * FROM produtos";
 $statement = $connection->prepare($sql);
 $statement->execute();
 $produtos = $statement->fetchAll(PDO::FETCH_OBJ);
@@ -136,7 +154,7 @@ foreach($pedidos as $pedido){
       </section>
         </div>
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <section>
+      <section>
         <!-- listagem dos dados da tabela clientes na tela -->
         <table class="table bg-light text-center border-top border border-secondary">
 
@@ -154,8 +172,35 @@ foreach($pedidos as $pedido){
           </tbody>
 
         </table>
-    
+
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+        <?php  
+        
+        echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=1'>Primeira</a></li> "; 
+  
+        for($paginaAnterior = $pagina - $maxLink; $paginaAnterior <= $pagina -1; $paginaAnterior++){
+          if($paginaAnterior >=1){
+            echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=$paginaAnterior'>$paginaAnterior</a></li> ";
+          }
+        }
+        
+        echo "<li class='page-item' ><a class='page-link disabled bg-dark'>$pagina</a></li>"; 
+        
+        for($proximaPagina = $pagina + 1; $proximaPagina <= $pagina + $maxLink; $proximaPagina++){
+          if($proximaPagina <= $qtdPgCliente){
+            echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=$proximaPagina'>$proximaPagina</a></li> ";
+          }
+        }
+      
+        
+      echo "<li class='page-item'><a class='page-link' href='index.php?pgcliente=$qtdPgCliente'>Última</a></li> "; 
+                
+        ?>
+        </ul>
+        </nav>
       </section>
+
         </div>
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"> 
           <section>

@@ -28,6 +28,5 @@
       <button type="submit" class="btn btn-success"><?=CONFIRMACAO?></button>
     </div>
 
-  </form>  
-
+  </form>
 </main>

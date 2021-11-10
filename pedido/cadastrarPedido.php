@@ -19,13 +19,27 @@ if(isset( $_POST['qtPedido'], $_POST['idProduto'], $_POST['idCliente'])){
     $qtPedido = $_POST['qtPedido'];
     $idProduto = $_POST['idProduto'];
     $idCliente = $_POST['idCliente'];
-    
 
-            $sql = 'INSERT INTO pedidos (DtPedido, Quantidade, IdProduto, IdCliente) VALUES (now(), :qtPedido, :idProduto, :idCliente)';
-            $statement = $connection->prepare($sql);
-            if($statement->execute([':qtPedido'=> $qtPedido, ':idProduto'=>$idProduto, ':idCliente'=>$idCliente])){
-                header('location: ../index.php?status=sucesso');
-            }  
+    if(empty($qtPedido)){
+        $errQtPedido = "Campo QUANTIDADE Obrigatório";
+    }
+
+    if(empty($idProduto)){
+        $errIdProduto = "Campo ID Produto Obrigatório";
+    }
+
+    if(empty($idCliente)){
+        $errIdCliente = "Campo ID Cliente Obrigatório";
+    }
+
+    if(!empty($qtPedido) && !empty($idProduto) && !empty($idCliente)){
+
+        $sql = 'INSERT INTO pedidos (DtPedido, Quantidade, IdProduto, IdCliente) VALUES (now(), :qtPedido, :idProduto, :idCliente)';
+        $statement = $connection->prepare($sql);
+        if($statement->execute([':qtPedido'=> $qtPedido, ':idProduto'=>$idProduto, ':idCliente'=>$idCliente])){
+            header('location: ../index.php?status=sucesso');
+        }  
+    }
     
     }
     
