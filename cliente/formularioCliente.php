@@ -11,17 +11,17 @@
   
     <div class="form-group">
         <label>Nome <span class="text-danger font-weight-bold"><?=$errNome?></span></label>
-        <input type="text" class="form-control" name="nome" value="<?=VALORCLIENTE?>">
+        <input type="text" class="form-control" name="nome" maxlength="100" value="<?=VALORCLIENTE?>">
     </div>
 
     <div class="form-group">
         <label>CPF <span class="text-danger font-weight-bold"><?=$errCpf?></span></label>
-        <input type="text" class="form-control" name="cpf" value="<?=VALORCPF?>">
+        <input class="form-control" name="cpf" minlength="11" maxlength="11" pattern="[0-9]+$" value="<?=VALORCPF?>">
     </div>
 
     <div class="form-group">
         <label>E-mail</label>
-        <input type="text" class="form-control" name="email" value="<?=VALOREMAIL?>">
+        <input type="text" class="form-control" name="email" maxlength="100" value="<?=VALOREMAIL?>">
     </div>
 
     <div class="form-group mt-3">

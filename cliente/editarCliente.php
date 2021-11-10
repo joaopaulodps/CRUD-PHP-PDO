@@ -27,10 +27,25 @@ if(isset($_POST['nome'], $_POST['cpf'], $_POST['email'])){
     $cpf = $_POST['cpf'];
     $email = $_POST['email'];
 
-    $sql = 'UPDATE clientes SET NomeCliente=:nome, CPF=:cpf, Email=:email WHERE Id=:id';
-    $statement = $connection->prepare($sql);
-    if($statement->execute([':nome'=> $nome, ':cpf'=> $cpf, ':email'=>$email, ':id'=>$id])){
-        header('location: ../index.php?status=sucesso');
+    if(empty($nome)) {
+        $errNome = "Campo NOME obrigatório!";
+    }
+    if(empty($cpf)) {
+        $errCpf = "Campo CPF obrigatório!";
+    }
+       
+    if(strlen($nome) > 100){
+        $errNome = "Campo NOME deve possuir até 100 caracteres";
+    };
+    
+    if(!empty($nome) && !empty($cpf)){
+
+        
+        $sql = 'UPDATE clientes SET NomeCliente=:nome, CPF=:cpf, Email=:email WHERE Id=:id';
+        $statement = $connection->prepare($sql);
+        if($statement->execute([':nome'=> $nome, ':cpf'=> $cpf, ':email'=>$email, ':id'=>$id])){
+            header('location: ../index.php?status=sucesso');
+        }
     }
 
 }

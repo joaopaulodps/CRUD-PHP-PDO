@@ -11,17 +11,17 @@
   
     <div class="form-group">
         <label>Código de Barras <span class="text-danger font-weight-bold"><?=$errCodBarras?></span></label>
-        <input type="text" class="form-control" name="codBarras" value="<?=VALORCB?>">
+        <input type="text" class="form-control" name="codBarras" maxlength="20" pattern="[0-9]+$" value="<?=VALORCB?>">
     </div>
 
     <div class="form-group">
         <label>Nome do Produto <span class="text-danger font-weight-bold"><?=$errNomProd?></span></label>
-        <input type="text" class="form-control" name="nomeProd" value="<?=VALORNP?>">
+        <input type="text" class="form-control" name="nomeProd" maxlength="100" value="<?=VALORNP?>">
     </div>
 
     <div class="form-group">
         <label>Valor Unitário</label>
-        <input type="text" class="form-control" name="valUni" value="<?=VALORVU?>">
+        <input type="text" class="form-control" name="valUni" maxlength="14" pattern="[0-9]+(\.[0-9][0-9]?)?" value="<?=VALORVU?>">
     </div>
 
     <div class="form-group mt-3">

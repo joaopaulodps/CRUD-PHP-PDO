@@ -40,7 +40,7 @@ $qtdRegistrosPedido = "SELECT COUNT(NumeroPedido) AS numResultPedido FROM pedido
 foreach($pedidos as $pedido){
   $resultPedidos .= '<tr>
                     <td>'.$pedido->NumeroPedido.'</td>
-                    <td>'.$pedido->DtPedido.'</td>
+                    <td>'.date('d/m/Y à\s H:i:s',strtotime($pedido->DtPedido)).'</td>
                     <td>'.$pedido->Quantidade.'</td>
                     <td>'.$pedido->IdProduto.'</td>
                     <td>'.$pedido->IdCliente.'</td>

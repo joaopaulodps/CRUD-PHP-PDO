@@ -24,9 +24,11 @@ if(isset($_POST['nome'], $_POST['cpf'], $_POST['email'])){
         if(empty($cpf)) {
             $errCpf = "Campo CPF obrigatório!";
         }
+           
+        if(strlen($nome) > 100){
+            $errNome = "Campo NOME deve possuir até 100 caracteres";
+        };
         
-        if($nome )
-
         if(!empty($nome) && !empty($cpf)){
 
             $sql = 'INSERT INTO clientes (NomeCliente, CPF, Email) VALUES (:nome, :cpf, :email)';

@@ -10,6 +10,7 @@ define('VALORVU','');
 
 $errCodBarras = '';
 $errNomProd = '';
+$errValProd = '';
 $msg = '';
 // Método responsável pela criação de produtos no banco de dados
 

@@ -21,7 +21,7 @@
 
     <div class="form-group">
         <label>Quantidade <span class="text-danger font-weight-bold"><?=$errQtPedido?></span></label>
-        <input type="text" class="form-control" name="qtPedido" value="<?=VALORQP?>">
+        <input type="text" class="form-control" name="qtPedido" pattern="[0-9]+$" value="<?=VALORQP?>">
     </div>
 
     <div class="form-group mt-3">

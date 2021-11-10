@@ -41,7 +41,7 @@ foreach($produtos as $produto){
                     <td>'.$produto->IdProduto.'</td>
                     <td>'.$produto->CodBarras.'</td>
                     <td>'.$produto->NomeProduto.'</td>
-                    <td>'.$produto->ValorUnitario.'</td>
+                    <td>'.number_format($produto->ValorUnitario, 2,',', ' ').'</td>
                     <td>
                         <a href="./produto/editarProduto.php?id='.$produto->IdProduto.'" class="btn btn-info">Editar</a>
                         <a href="./produto/excluirProduto.php?id='.$produto->IdProduto.'" class="btn btn-danger">Excluir</a>
