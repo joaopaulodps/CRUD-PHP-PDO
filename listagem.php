@@ -59,28 +59,12 @@ $qtdRegistrosProduto = "SELECT COUNT(idProduto) AS numResultProd FROM produtos";
   $maxLinkProduto = 3;
 
 
-  $paginaAtualPedido = filter_input(INPUT_GET, "pgpedido", FILTER_SANITIZE_NUMBER_INT);
-  
-  $limiteResultadoPedido = 20;
-  $paginaPedido = (!empty($paginaAtualPedido)) ? $paginaAtualPedido : 1;
-  var_dump($paginaPedido);
-  
-  $inicioPedido = ($limiteResultadoPedido * $paginaPedido) - $limiteResultadoPedido;
 
-$sql = "SELECT * FROM pedidos LIMIT $inicioPedido, $limiteResultadoPedido";
+//query de ordenação
+/* $sql = "SELECT * FROM pedidos ORDER BY Quantidade DESC";
 $statement = $connection->prepare($sql);
 $statement->execute();
-$pedidos = $statement->fetchAll(PDO::FETCH_OBJ);
-
-$qtdRegistrosPedido = "SELECT COUNT(NumeroPedido) AS numResultPedido FROM pedidos";
-  $resQtdRegistrosPedido = $connection->prepare($qtdRegistrosPedido);
-  $resQtdRegistrosPedido->execute();
-  $rowQtdRegistrosPedido = $resQtdRegistrosPedido->fetch(PDO::FETCH_ASSOC);
-  
-  $qtdPgPedido = ceil($rowQtdRegistrosPedido['numResultPedido'] / $limiteResultadoPedido);
-
-  $maxLinkPedido = 3;
-
+$pedidos = $statement->fetchAll(PDO::FETCH_OBJ);  */
 //listagem dos resultados da tabela CLIENTES, do banco de dados
 $resultClientes = '';
 foreach($clientes as $cliente){
@@ -112,20 +96,6 @@ foreach($produtos as $produto){
 }
 
 //listagem dos resultados da tabela PEDIDOS, do banco de dados
-$resultPedidos = '';
-foreach($pedidos as $pedido){
-  $resultPedidos .= '<tr>
-                    <td>'.$pedido->NumeroPedido.'</td>
-                    <td>'.$pedido->DtPedido.'</td>
-                    <td>'.$pedido->Quantidade.'</td>
-                    <td>'.$pedido->IdProduto.'</td>
-                    <td>'.$pedido->IdCliente.'</td>
-                    <td>
-                        <a href="./pedido/editarPedido.php?id='.$pedido->NumeroPedido.'" class="btn btn-info">Editar</a>
-                        <a href="./pedido/excluirPedido.php?id='.$pedido->NumeroPedido.'" class="btn btn-danger">Excluir</a>
-                    </td>
-                  </tr>';
-}
 
 ?>
 
@@ -168,54 +138,9 @@ foreach($pedidos as $pedido){
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
         <section>
-        <!-- listagem dos dados da tabela clientes na tela -->
-        <table class="table bg-light text-center border-top border border-secondary">
 
-          <thead>
-            <tr>
-              <th>N° PEDIDO</th>
-              <th>DATA PEDIDO</th>
-              <th>QUANTIDADE</th>
-              <th>ID PRODUTO</th>
-              <th>ID CLIENTE</th>
-              <th>AÇÕES</th>
-            </tr>
-          </thead>
-          <tbody>        
-            <?=$resultPedidos?>
-          </tbody>
-
-        </table>
-    
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-        <?php  
-        
-        echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=1'>Primeira</a></li> "; 
-  
-        for($paginaAnteriorPedido = $paginaPedido - $maxLinkPedido; $paginaAnteriorPedido <= $paginaPedido -1; $paginaAnteriorPedido++){
-          if($paginaAnteriorPedido >=1){
-            echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$paginaAnteriorPedido'>$paginaAnteriorPedido</a></li> ";
-          }
-        }
-        
-        echo "<li class='page-item' ><a class='page-link disabled bg-dark'>$paginaPedido</a></li>"; 
-        
-        for($proximaPaginaPedido = $paginaPedido + 1; $proximaPaginaPedido <= $paginaPedido + $maxLinkPedido; $proximaPaginaPedido++){
-          if($proximaPaginaPedido <= $qtdPgPedido){
-            echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$proximaPaginaPedido'>$proximaPaginaPedido</a></li> ";
-          }
-        }
-      
-        
-      echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$qtdPgPedido'>Última</a></li> "; 
-                
-        ?>
-        </ul>
-        </nav>
-
-      </section>
-        </div>
+         <!-- listagem dos dados da tabela clientes na tela -->
+         <?php require 'listagemPedidos.php';?>
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
       <section>
         <!-- listagem dos dados da tabela clientes na tela -->
