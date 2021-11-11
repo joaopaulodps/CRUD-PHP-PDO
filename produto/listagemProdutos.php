@@ -58,9 +58,9 @@ $ordem == 'DESC' ? $ordem = 'ASC' : $ordem = 'DESC';
   <thead>
     <tr>
       <th><a href='?pgproduto=$paginaProduto&&coluna=IdProduto&&ordem=$ordem'>ID</a></th>
-      <th><a href='?pgcliente=$paginaCliente&&coluna=CodBarras&&ordem=$ordem'>CODIGO DE BARRAS</a></th>
-      <th><a href='?pgcliente=$paginaCliente&&coluna=NomeProduto&&ordem=$ordem'>NOME PRODUTO</a></th>
-      <th><a href='?pgcliente=$paginaCliente&&coluna=ValorUnitario&&ordem=$ordem'>VALOR UNITARIO</a></th>
+      <th><a href='?pgproduto=$paginaProduto&&coluna=CodBarras&&ordem=$ordem'>CODIGO DE BARRAS</a></th>
+      <th><a href='?pgproduto=$paginaProduto&&coluna=NomeProduto&&ordem=$ordem'>NOME PRODUTO</a></th>
+      <th><a href='?pgproduto=$paginaProduto&&coluna=ValorUnitario&&ordem=$ordem'>VALOR UNITARIO</a></th>
       <th>AÇÔES</th>
     </tr>
   </thead>

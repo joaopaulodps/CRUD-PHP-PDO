@@ -24,6 +24,31 @@
         <input type="text" class="form-control" name="qtPedido" pattern="[0-9]+$" value="<?=VALORQP?>">
     </div>
 
+    <div class="form-group">
+      <label>Status do Pedido</label>
+
+      <div class="d-flex flex-row">
+          <div>
+            <label class="form-control">
+              <input type="radio" name="aberto" value="Em Aberto" checked> Em aberto
+            </label>
+          </div>
+
+          <div class="form-check">
+            <label class="form-control">
+              <input type="radio" name="aberto" value="Pago"> Pago
+            </label>
+          </div>
+
+          <div class="form-check">
+            <label class="form-control">
+              <input type="radio" name="aberto" value="Cancelado"> Cancelado
+            </label>
+          </div>
+      </div>
+
+    </div>
+
     <div class="form-group mt-3">
       <button type="submit" class="btn btn-success"><?=CONFIRMACAO?></button>
     </div>

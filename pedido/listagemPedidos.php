@@ -4,7 +4,6 @@ $paginaAtualPedido = filter_input(INPUT_GET, "pgpedido", FILTER_SANITIZE_NUMBER_
   
   $limiteResultadoPedido = 20;
   $paginaPedido = (!empty($paginaAtualPedido)) ? $paginaAtualPedido : 1;
-  var_dump($paginaPedido);
   
   $inicioPedido = ($limiteResultadoPedido * $paginaPedido) - $limiteResultadoPedido;
 
@@ -44,7 +43,7 @@ foreach($pedidos as $pedido){
                     <td>'.$pedido->Quantidade.'</td>
                     <td>'.$pedido->IdProduto.'</td>
                     <td>'.$pedido->IdCliente.'</td>
-                    <td>'.$pedido->IdCliente.'</td>
+                    <td>'.$pedido->StatusPedido.'</td>
                     <td>
                         <a href="./pedido/detalhesPedido.php?id='.$pedido->NumeroPedido.'" class="btn btn-success">Detalhes</a>
                         <a href="./pedido/editarPedido.php?id='.$pedido->NumeroPedido.'" class="btn btn-info">Editar</a>
@@ -53,44 +52,50 @@ foreach($pedidos as $pedido){
                   </tr>';
 }
          
-        $ordem == 'DESC' ? $ordem = 'ASC' : $ordem = 'DESC';
-
          echo "
          <table class='table bg-light text-center border-top border border-secondary'>
 
           <thead>
             <tr>
-              <th><a href='?pgpedido=$paginaPedido&&coluna=NumeroPedido&&ordem=$ordem'>N° PEDIDO</a></th>
-              <th><a href='?pgpedido=$paginaPedido&&coluna=DtPedido&&ordem=$ordem'>DATA PEDIDO</a></th>
-              <th><a href='?pgpedido=$paginaPedido&&coluna=Quantidade&&ordem=$ordem'>QUANTIDADE</a></th>
-              <th><a href='?pgpedido=$paginaPedido&&coluna=IdProduto&&ordem=$ordem'>ID PRODUTO</a></th>
-              <th><a href='?pgpedido=$paginaPedido&&coluna=IdCliente&&ordem=$ordem'>ID CLIENTE</a></th>
-              <th><a href='?pgpedido=$paginaPedido&&coluna=$coluna&&ordem=$ordem'>STATUS</a></th>
-              <th>AÇÕES</th>
+              <th><a href='?pgpedido=$paginaPedido&&coluna=NumeroPedido&&ordem=DESC'><button class='btn btn-success btn-sm'>⮝ </button></a>
+                  <a href='?pgpedido=$paginaPedido&&coluna=NumeroPedido&&ordem=ASC'><button class='btn btn-danger btn-sm'>⮟</button></a><br>N° PEDIDO</th>
+              <th><a href='?pgpedido=$paginaPedido&&coluna=DtPedido&&ordem=DESC'><button class='btn btn-success btn-sm'>⮝ </button></a>
+                  <a href='?pgpedido=$paginaPedido&&coluna=DtPedido&&ordem=ASC'><button class='btn btn-danger btn-sm'>⮟</button></a><br>DATA PEDIDO</th>
+              <th><a href='?pgpedido=$paginaPedido&&coluna=Quantidade&&ordem=DESC'><button class='btn btn-success btn-sm'>⮝ </button></a>
+                  <a href='?pgpedido=$paginaPedido&&coluna=Quantidade&&ordem=ASC'><button class='btn btn-danger btn-sm'>⮟</button></a><br>QUANTIDADE</th>
+              <th><a href='?pgpedido=$paginaPedido&&coluna=IdProduto&&ordem=DESC'><button class='btn btn-success btn-sm'>⮝ </button></a>
+                  <a href='?pgpedido=$paginaPedido&&coluna=IdProduto&&ordem=ASC'><button class='btn btn-danger btn-sm'>⮟</button></a><br>ID PRODUTO</th>
+              <th><a href='?pgpedido=$paginaPedido&&coluna=IdCliente&&ordem=DESC'><button class='btn btn-success btn-sm'>⮝ </button></a>
+                  <a href='?pgpedido=$paginaPedido&&coluna=IdCliente&&ordem=ASC'><button class='btn btn-danger btn-sm'>⮟</button></a><br>ID CLIENTE</th>
+              <th><a href='?pgpedido=$paginaPedido&&coluna=StatusPedido&&ordem=DESC'><button class='btn btn-success btn-sm'>⮝ </button></a>
+                  <a href='?pgpedido=$paginaPedido&&coluna=StatusPedido&&ordem=ASC'><button class='btn btn-danger btn-sm'>⮟</button></a><br>STATUS</th>
+                  <th>AÇÕES</th>
             </tr>
           </thead>
-         ";
-         echo "
          <tbody>        
          <?=$resultPedidos?>
        </tbody>
        
        </table>
        "
-       ?>
         
+       ?>
         <nav aria-label="Page navigation example">
           <ul class="pagination">
         <?php  
-        
-        echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=1&&coluna=$coluna&&ordem=$ordem'>Primeira</a></li> "; 
+
+  if(isset($_GET['ordem=']) == "DESC"){
+    $ordem = "DESC";
+  }
+
+  echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=1&&coluna=$coluna&&ordem=$ordem'>Primeira</a></li> "; 
   
-        for($paginaAnteriorPedido = $paginaPedido - $maxLinkPedido; $paginaAnteriorPedido <= $paginaPedido -1; $paginaAnteriorPedido++){
-          if($paginaAnteriorPedido >=1){
-            echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$paginaAnteriorPedido&&coluna=$coluna&&ordem=$ordem'>$paginaAnteriorPedido</a></li> ";
-          }
-        }
-        
+  for($paginaAnteriorPedido = $paginaPedido - $maxLinkPedido; $paginaAnteriorPedido <= $paginaPedido -1; $paginaAnteriorPedido++){
+    if($paginaAnteriorPedido >=1){
+      echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$paginaAnteriorPedido&&coluna=$coluna&&ordem=$ordem'>$paginaAnteriorPedido</a></li> ";
+    }
+  }
+  
         echo "<li class='page-item' ><a class='page-link disabled bg-dark'>$paginaPedido</a></li>"; 
         
         for($proximaPaginaPedido = $paginaPedido + 1; $proximaPaginaPedido <= $paginaPedido + $maxLinkPedido; $proximaPaginaPedido++){
@@ -98,10 +103,10 @@ foreach($pedidos as $pedido){
             echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$proximaPaginaPedido&&coluna=$coluna&&ordem=$ordem'>$proximaPaginaPedido</a></li> ";
           }
         }
-      
         
-      echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$qtdPgPedido&&coluna=$coluna&&ordem=$ordem'>Última</a></li> "; 
-                
+        
+        echo "<li class='page-item'><a class='page-link' href='index.php?pgpedido=$qtdPgPedido&&coluna=$coluna&&ordem=$ordem'>Última</a></li> "; 
+        
         ?>
         </ul>
         </nav>

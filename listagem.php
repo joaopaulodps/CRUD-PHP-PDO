@@ -43,29 +43,38 @@ if(isset($_GET['status'])){
   <section>
       <nav>
       <div class="nav nav-tabs mt-4" id="nav-tab" role="tablist">
-        <button class="btn btn-outline-success btn btn-light" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><strong>PEDIDOS</strong></button>
-        <button class="btn btn-outline-success btn btn-light" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><strong>CLIENTES</strong></button>
-        <button class="btn btn-outline-success btn btn-light" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false"><strong>PRODUTOS</strong></button>
+        <button class="btn btn-outline-success btn btn-light" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><a href="index.php?pgpedido=1&&coluna=NumeroPedido&&ordem=ASC"><strong>PEDIDOS</strong></a></button>
+        <button class="btn btn-outline-success btn btn-light" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><a href="index.php?pgcliente"><strong>CLIENTES</strong></a></button>
+        <button class="btn btn-outline-success btn btn-light" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false"><a href="index.php?pgproduto"><strong>PRODUTOS</strong></a></button>
       </div>
       </nav>
-      <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      
         <section>
+        
          <!-- listagem dos dados da tabela clientes na tela -->
-         <?php require 'listagemPedidos.php';?>
+         <?php 
+         if(isset($_GET['pgpedido'])){
+           require './pedido/listagemPedidos.php';
+         }
+         if(isset($_GET['pgcliente'])){
+           require './cliente/listagemClientes.php';
+         }
+         if(isset($_GET['pgproduto'])){
+           require './produto/listagemProdutos.php';
+         }
+           ?>
+         
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
       <section>
         <!-- listagem dos dados da tabela clientes na tela -->
-        <?php require 'listagemClientes.php' ?>
+        <?php require './cliente/listagemClientes.php';?>
       </section>
 
         </div>
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"> 
           <section>
-       <?php require 'listagemProdutos.php' ?>
+       <?php require './produto/listagemProdutos.php';?>
       </section>
-    </div>
-      </div>
 
   </section>
   

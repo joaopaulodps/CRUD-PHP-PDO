@@ -19,7 +19,8 @@ create table pedidos (
     DtPedido datetime not null,
     Quantidade int not null,
     IdProduto int not null,
-    IdCliente int not null
+    IdCliente int not null,
+    StatusPedido int not null
 
 );
 
