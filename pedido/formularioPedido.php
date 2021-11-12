@@ -30,19 +30,19 @@
       <div class="d-flex flex-row">
           <div>
             <label class="form-control">
-              <input type="radio" name="aberto" value="Em Aberto" checked> Em aberto
+              <input type="radio" name="statusPedido" value="Em Aberto" checked> Em aberto
             </label>
           </div>
 
           <div class="form-check">
             <label class="form-control">
-              <input type="radio" name="aberto" value="Pago"> Pago
+              <input type="radio" name="statusPedido" value="Pago"> Pago
             </label>
           </div>
 
           <div class="form-check">
             <label class="form-control">
-              <input type="radio" name="aberto" value="Cancelado"> Cancelado
+              <input type="radio" name="statusPedido" value="Cancelado"> Cancelado
             </label>
           </div>
       </div>

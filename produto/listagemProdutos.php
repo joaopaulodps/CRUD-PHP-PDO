@@ -2,7 +2,6 @@
 
 $paginaAtualProduto = filter_input(INPUT_GET, "pgproduto", FILTER_SANITIZE_NUMBER_INT);
   $paginaProduto = (!empty($paginaAtualProduto)) ? $paginaAtualProduto : 1;
-  var_dump($paginaProduto);
   
   $limiteResultadoProduto = 20;
   
@@ -20,7 +19,23 @@ $paginaAtualProduto = filter_input(INPUT_GET, "pgproduto", FILTER_SANITIZE_NUMBE
     $ordem = 'ASC';
   }
 
-$sql = "SELECT * FROM produtos ORDER BY $coluna $ordem LIMIT $inicioProduto, $limiteResultadoProduto";
+  if(isset($_GET['opcoes'])){
+    $opFiltro = $_GET['opcoes'];
+  }else{
+    $opFiltro = '';
+  };
+  
+  $opFiltro = $statusFiltro;
+  
+  $textoFiltro = $busca;
+  
+  $selFiltro = 'WHERE '.$opFiltro.' LIKE "%'.$textoFiltro.'%"';
+  
+  if(empty($opFiltro) || empty($textoFiltro)){
+    $selFiltro = '';
+  }
+
+$sql = "SELECT * FROM produtos $selFiltro ORDER BY $coluna $ordem LIMIT $inicioProduto, $limiteResultadoProduto";
 $statement = $connection->prepare($sql);
 $statement->execute();
 $produtos = $statement->fetchAll(PDO::FETCH_OBJ);
@@ -43,13 +58,42 @@ foreach($produtos as $produto){
                     <td>'.$produto->NomeProduto.'</td>
                     <td>'.number_format($produto->ValorUnitario, 2,',', ' ').'</td>
                     <td>
+                        <a href="./produto/detalhesProduto.php?id='.$produto->IdProduto.'" target="_blank" class="btn btn-success">Detalhes</a>
                         <a href="./produto/editarProduto.php?id='.$produto->IdProduto.'" class="btn btn-info">Editar</a>
                         <a href="./produto/excluirProduto.php?id='.$produto->IdProduto.'" class="btn btn-danger">Excluir</a>
                     </td>
                   </tr>';
 }
 
-$ordem == 'DESC' ? $ordem = 'ASC' : $ordem = 'DESC';
+echo '<div class="mt-3 d-flex inline">
+
+                <form method="post">
+                  <div class="row">
+                    <div class="col">
+                      <select class="form-select" aria-label="Default select example" name="status">
+                        <option disabled>SELECIONE UM FILTRO</option>
+                        <option value="IdProduto" >ID</option>
+                        <option value="CodBarras" >Código de Barras</option>
+                        <option value="NomeProduto" >Nome Produto</option>
+                        <option value="ValorUnitario" >Valor Unitário</option>
+                      </select>
+                    </div>
+    
+                    <div class="col">
+                      <input type="text" name="busca" class="form-control" placeholder="Caixa de Busca" value='.$busca.'>
+                    </div>
+                    <div class="col d-flex align-items-end">
+    
+                      <button type="submit" name="pesquisa" class="btn btn-primary">Filtrar</button>
+                    </div>
+                  </div>
+                </form>
+    
+                <form method="post" class="d-flex flex-row-reverse">
+                  <button value='.$selFiltro.' type="submit" class="btn btn-warning"> RESETAR FILTROS</button>
+                </form>
+            </div>';
+
  
     echo "
 <!-- listagem dos dados da tabela clientes na tela -->
@@ -57,10 +101,14 @@ $ordem == 'DESC' ? $ordem = 'ASC' : $ordem = 'DESC';
 
   <thead>
     <tr>
-      <th><a href='?pgproduto=$paginaProduto&&coluna=IdProduto&&ordem=$ordem'>ID</a></th>
-      <th><a href='?pgproduto=$paginaProduto&&coluna=CodBarras&&ordem=$ordem'>CODIGO DE BARRAS</a></th>
-      <th><a href='?pgproduto=$paginaProduto&&coluna=NomeProduto&&ordem=$ordem'>NOME PRODUTO</a></th>
-      <th><a href='?pgproduto=$paginaProduto&&coluna=ValorUnitario&&ordem=$ordem'>VALOR UNITARIO</a></th>
+      <th><a href='?pgproduto=$paginaProduto&&coluna=IdProduto&&ordem=DESC'><button class='btn btn-info btn-sm'>⮝ </button></a>
+      <a href='?pgproduto=$paginaProduto&&coluna=IdProduto&&ordem=ASC'><button class='btn btn-info btn-sm'>⮟</button></a><br>ID</a></th>
+      <th><a href='?pgproduto=$paginaProduto&&coluna=CodBarras&&ordem=DESC'><button class='btn btn-info btn-sm'>⮝ </button></a>
+      <a href='?pgproduto=$paginaProduto&&coluna=CodBarras&&ordem=ASC'><button class='btn btn-info btn-sm'>⮟</button></a><br>CODIGO DE BARRAS</a></th>
+      <th><a href='?pgproduto=$paginaProduto&&coluna=NomeProduto&&ordem=DESC'><button class='btn btn-info btn-sm'>⮝ </button></a>
+      <a href='?pgproduto=$paginaProduto&&coluna=NomeProduto&&ordem=ASC'><button class='btn btn-info btn-sm'>⮟</button></a><br>NOME PRODUTO</a></th>
+      <th><a href='?pgproduto=$paginaProduto&&coluna=ValorUnitario&&ordem=DESC'><button class='btn btn-info btn-sm'>⮝ </button></a>
+      <a href='?pgproduto=$paginaProduto&&coluna=ValorUnitario&&ordem=ASC'><button class='btn btn-info btn-sm'>⮟</button></a><br>VALOR UNITARIO</a></th>
       <th>AÇÔES</th>
     </tr>
   </thead>

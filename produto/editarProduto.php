@@ -12,8 +12,8 @@ $statement = $connection->prepare($sql);
 $statement->execute([':idProd'=>$id]);
 $produto = $statement->fetch(PDO::FETCH_OBJ);
 
-$errNome = '';
-$errCpf = '';
+$errCodBarras = '';
+$errNomProd = '';
 $msg = '';
 
 define('VALORCB',$produto->CodBarras);

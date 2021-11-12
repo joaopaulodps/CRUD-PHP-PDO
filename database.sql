@@ -20,7 +20,7 @@ create table pedidos (
     Quantidade int not null,
     IdProduto int not null,
     IdCliente int not null,
-    StatusPedido int not null
+    StatusPedido char(10) not null
 
 );
 

@@ -28,13 +28,13 @@ if(isset($_POST['nome'], $_POST['cpf'], $_POST['email'])){
         if(strlen($nome) > 100){
             $errNome = "Campo NOME deve possuir até 100 caracteres";
         };
-        
+
         if(!empty($nome) && !empty($cpf)){
 
             $sql = 'INSERT INTO clientes (NomeCliente, CPF, Email) VALUES (:nome, :cpf, :email)';
             $statement = $connection->prepare($sql);
             if($statement->execute([':nome'=> $nome, ':cpf'=> $cpf, ':email'=>$email])){
-                header('location: ../index.php?status=sucesso');
+                header('location: ../index.php?pgcliente&&status=sucesso');
             } 
         }
             

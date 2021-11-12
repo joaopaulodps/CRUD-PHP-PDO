@@ -25,25 +25,12 @@ if(isset($_GET['status'])){
     </div>
   </div>
 
-  <div>
-
-    <form method="get">
-      <div class="row">
-        <div class="col">
-          <input type="text" name="busca" class="form-control" placeholder="Caixa de Busca" value="<?=$busca?>">
-        </div>
-        <div class="col d-flex align-items-end">
-          <button type="submit" class="btn btn-primary">Buscar</button>
-        </div>
-      </div>
-    </form>
-  </div>
 </nav>
 
   <section>
       <nav>
       <div class="nav nav-tabs mt-4" id="nav-tab" role="tablist">
-        <button class="btn btn-outline-success btn btn-light" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><a href="index.php?pgpedido=1&&coluna=NumeroPedido&&ordem=ASC"><strong>PEDIDOS</strong></a></button>
+        <button class="btn btn-outline-success btn btn-light" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><a href="index.php?pgpedido"><strong>PEDIDOS</strong></a></button>
         <button class="btn btn-outline-success btn btn-light" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><a href="index.php?pgcliente"><strong>CLIENTES</strong></a></button>
         <button class="btn btn-outline-success btn btn-light" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false"><a href="index.php?pgproduto"><strong>PRODUTOS</strong></a></button>
       </div>
@@ -57,12 +44,12 @@ if(isset($_GET['status'])){
            require './pedido/listagemPedidos.php';
          }
          if(isset($_GET['pgcliente'])){
-           require './cliente/listagemClientes.php';
+           include './cliente/listagemClientes.php';
          }
          if(isset($_GET['pgproduto'])){
            require './produto/listagemProdutos.php';
          }
-           ?>
+        ?>
          
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
       <section>

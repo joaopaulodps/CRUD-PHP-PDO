@@ -32,7 +32,7 @@ if(isset($_POST['codBarras'], $_POST['nomeProd'], $_POST['valUni'])){
             $sql = 'INSERT INTO produtos (CodBarras, NomeProduto, ValorUnitario) VALUES (:codBarras, :nomeProd, :valUni)';
             $statement = $connection->prepare($sql);
             if($statement->execute([':codBarras'=> $codBarras, ':nomeProd'=> $nomeProd, ':valUni'=>$valUni])){
-                header('location: ../index.php?status=sucesso');
+                header('location: ../index.php?pgproduto&&status=sucesso');
             }  
         }
     
