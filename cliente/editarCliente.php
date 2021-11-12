@@ -22,25 +22,26 @@ define('VALOREMAIL',$cliente->Email);
 
 // Método responsável pelo update de clientes no banco de dados
 if(isset($_POST['nome'], $_POST['cpf'], $_POST['email'])){
-    
+
     $nome = $_POST['nome'];
     $cpf = $_POST['cpf'];
     $email = $_POST['email'];
 
+    //validação dos campos do formulário    
     if(empty($nome)) {
         $errNome = "Campo NOME obrigatório!";
     }
     if(empty($cpf)) {
         $errCpf = "Campo CPF obrigatório!";
     }
-       
+
     if(strlen($nome) > 100){
         $errNome = "Campo NOME deve possuir até 100 caracteres";
     };
-    
+
     if(!empty($nome) && !empty($cpf)){
 
-        
+        //Update dos dados na tabela clientes    
         $sql = 'UPDATE clientes SET NomeCliente=:nome, CPF=:cpf, Email=:email WHERE Id=:id';
         $statement = $connection->prepare($sql);
         if($statement->execute([':nome'=> $nome, ':cpf'=> $cpf, ':email'=>$email, ':id'=>$id])){
